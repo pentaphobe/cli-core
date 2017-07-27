@@ -1,0 +1,19 @@
+{
+  "name": "cli-core",
+  "version": "0.1.0",
+  "description": "Common basis for a suite of CLI build tools",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/pentaphobe/cli-core.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pentaphobe/cli-core/issues"
+  },
+  "homepage": "https://github.com/pentaphobe/cli-core#readme"
+}
