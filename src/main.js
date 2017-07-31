@@ -42,6 +42,3 @@ program.parse(process.argv);
 if (program.args.length === 0) {
   program.help();
 }
-
-console.log(`FS wrapping test: ${fs.readFileSync(cwdRelative(scriptPath('../README.md')), {encoding:'utf8'})}`);
-console.log(`trying FS wrapping custom func: ${fs.existsSync(cwdRelative(scriptPath('../README.md')))}`);
