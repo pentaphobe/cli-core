@@ -1,6 +1,8 @@
 const path = require('path');
-const program = require('commander');
 const pkg = rootRequire('package.json');
+
+const chalk = require('chalk');
+const program = require('commander');
 
 ///////// Global configuration and options
 program
@@ -12,13 +14,20 @@ program
   .command('noop [optional] [others...]')
   .description('does nothing, just a demonstration')
   .action( (optional, others, program) => {
-    console.dir({
-      optional: optional,
-      others: others,
-      dryRun: program.parent.dryRun
-    });
+    const ProgressBar = require('progress');
+
+    var bar = new ProgressBar(`${chalk.blue('doing nothing')} [:bar] :current / :total :percent`, { total: 30 });
+    var timer = setInterval(function () {
+      bar.tick();
+      if (bar.complete) {
+        console.log(chalk.green("\ncomplete\n"));
+        clearInterval(timer);
+      }
+    }, 100);
+
   })
 
+///////// Entry point
 program
   .parse(process.argv)
 
