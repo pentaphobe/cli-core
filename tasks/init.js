@@ -9,6 +9,8 @@ const path = require('path');
 const inquirer = require('inquirer');
 const chalk = require('chalk');
 const semver = require('semver');
+const validatePackageName = require('validate-npm-package-name');
+const init = require('init-package-json');
 
 const paths = require('../src/paths');
 let pkg = require('../package.json');
@@ -29,8 +31,7 @@ const questions = [
     name: 'name',
     message: 'Project name',
     type: 'input',
-    // TODO: use actual valid package.json name validation
-    validate: (name) => /[a-z0-9_\-]+/.test(name),
+    validate: (name) => validatePackageName(name).validForNewPackages,
     default: path.basename(path.dirname(path.resolve(paths.scriptPath(''))))    
   },
   {
@@ -98,6 +99,20 @@ prompt(questions)
  */
 
 function savePackage(pkg) {
-  console.log('### Resulting package.json');
-  console.dir(pkg, {colors: true});
+  if (pkg.name === 'cli-core') {
+    console.error(chalk.red.bold(`not overwriting package.json: `), chalk.red(`your project name is still "cli-core", please change it`));
+    console.log('### Resulting package.json');
+    console.dir(pkg, {colors: true});
+    system.exit(-1);
+  }
+
+  var initFile = path.resolve(process.env.HOME, '.npm-init')
+  
+  var dir = paths.scriptPath('');
+
+  init(dir, initFile, pkg, function callback (err, data) {
+    if (!err) {
+      console.log(chalk.green('saved package.json'));
+    }
+  });
 }

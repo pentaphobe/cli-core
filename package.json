@@ -8,6 +8,7 @@
   "cli": {
     "main": "src/main"
   },
+  "preferGlobal": true,
   "scripts": {
     "start": "node bin/index",
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -32,9 +33,11 @@
     "commander": "^2.11.0",
     "glob": "^7.1.2",
     "graceful-fs": "^4.1.11",
+    "init-package-json": "^1.10.1",
     "inquirer": "^3.2.1",
     "progress": "^2.0.0",
-    "semver": "^5.4.1"
+    "semver": "^5.4.1",
+    "validate-npm-package-name": "^3.0.0"
   },
   "lint-staged": {
     "*.js": "prettier"
