@@ -2,18 +2,38 @@
   "name": "cli-core",
   "version": "0.1.0",
   "description": "Common basis for a suite of CLI build tools",
-  "main": "index.js",
+  "bin": {
+    "cli-core": "./bin/index.js"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "postinstall": "node tasks/postinstall",
+    "prettier": "prettier --trailing-comma es5 --single-quote --write",
+    "format": "npm run prettier 'bin/*.js' 'src/*.js' 'tasks/*.js'",
+    "precommit": "lint-staged"
   },
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com/pentaphobe/cli-core.git"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Keilin Olsen (http://github.com/pentaphobe)",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/pentaphobe/cli-core/issues"
   },
-  "homepage": "https://github.com/pentaphobe/cli-core#readme"
+  "homepage": "https://github.com/pentaphobe/cli-core#readme",
+  "dependencies": {
+    "chalk": "^2.0.1",
+    "commander": "^2.11.0",
+    "glob": "^7.1.2",
+    "progress": "^2.0.0"
+  },
+  "lint-staged": {
+    "*.js": "prettier"
+  },
+  "devDependencies": {
+    "husky": "^0.14.3",
+    "lint-staged": "^4.0.2",
+    "prettier": "^1.5.3"
+  }
 }
