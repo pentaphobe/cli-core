@@ -15,8 +15,10 @@ const semver = require('semver');
 const validatePackageName = require('validate-npm-package-name');
 
 const paths = require('../src/paths');
+const fs = require('../src/fs');
 let pkg = require('../package.json');
 
+fs.setDryRun(true);
 
 /** 
  * 
@@ -105,7 +107,15 @@ function savePackage(pkg) {
   console.dir(pkg, {colors: true});
 
   if (pkg.name === 'cli-core') {
-    console.error(chalk.red.bold(`not overwriting package.json: `), chalk.red(`your project name is still "cli-core", please change it`));
-    system.exit(-1);
+    console.log(chalk.red.bold(`not overwriting package.json: `), chalk.red(`your project name is still "cli-core", please change it`));
+    process.exit(0);
   }
+
+  fs.writeJsonFile(paths.scriptPath('package.json'), pkg)
+  .then(() => {
+    console.log('done');
+  })
+  .catch(() => {
+    console.log('error');
+  });
 }
