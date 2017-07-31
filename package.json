@@ -1,6 +1,6 @@
 {
   "name": "cli-core",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Common basis for a suite of CLI build tools",
   "bin": {
     "cli-core": "./bin/index.js"
