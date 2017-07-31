@@ -5,12 +5,16 @@
   "bin": {
     "cli-core": "./bin/index.js"
   },
+  "cli": {
+    "main": "src/main"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "postinstall": "node tasks/postinstall",
     "prettier": "prettier --trailing-comma es5 --single-quote --write",
     "format": "npm run prettier 'bin/*.js' 'src/*.js' 'tasks/*.js'",
-    "precommit": "lint-staged"
+    "precommit": "lint-staged",
+    "init": "node tasks/init"
   },
   "repository": {
     "type": "git",
@@ -27,7 +31,9 @@
     "commander": "^2.11.0",
     "glob": "^7.1.2",
     "graceful-fs": "^4.1.11",
-    "progress": "^2.0.0"
+    "inquirer": "^3.2.1",
+    "progress": "^2.0.0",
+    "semver": "^5.4.1"
   },
   "lint-staged": {
     "*.js": "prettier"

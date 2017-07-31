@@ -35,5 +35,6 @@ global.rootRequire = function(name) {
 if (isCompatible !== true) {
 	console.error(chalk.red.bold(`\t${warningSymbol}\t`), chalk.red(isCompatible));	
 } else {
-	module.exports = rootRequire('src/main');
+  var pkg = rootRequire('package.json');
+	module.exports = rootRequire(pkg.cli.main);
 }
