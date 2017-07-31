@@ -29,7 +29,7 @@ function performCompatibilityChecks() {
 };
 
 global.rootRequire = function(name) {
-    return require(path.join(__dirname, '..', name));
+  return require(path.join(__dirname, '..', name));
 }
 
 if (isCompatible !== true) {
