@@ -2,6 +2,9 @@
  * 
  * Sets up some project defaults when cloned
  *
+ * This doesn't attempt to build a fully-fledged package.json from scratch
+ * expectation is that this repo will be used only as a starting point
+ * 
  */
 
 const path = require('path');
@@ -10,7 +13,6 @@ const inquirer = require('inquirer');
 const chalk = require('chalk');
 const semver = require('semver');
 const validatePackageName = require('validate-npm-package-name');
-const init = require('init-package-json');
 
 const paths = require('../src/paths');
 let pkg = require('../package.json');
@@ -99,20 +101,11 @@ prompt(questions)
  */
 
 function savePackage(pkg) {
+  console.log('### Resulting package.json');
+  console.dir(pkg, {colors: true});
+
   if (pkg.name === 'cli-core') {
     console.error(chalk.red.bold(`not overwriting package.json: `), chalk.red(`your project name is still "cli-core", please change it`));
-    console.log('### Resulting package.json');
-    console.dir(pkg, {colors: true});
     system.exit(-1);
   }
-
-  var initFile = path.resolve(process.env.HOME, '.npm-init')
-  
-  var dir = paths.scriptPath('');
-
-  init(dir, initFile, pkg, function callback (err, data) {
-    if (!err) {
-      console.log(chalk.green('saved package.json'));
-    }
-  });
 }

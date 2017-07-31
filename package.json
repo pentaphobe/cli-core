@@ -33,7 +33,6 @@
     "commander": "^2.11.0",
     "glob": "^7.1.2",
     "graceful-fs": "^4.1.11",
-    "init-package-json": "^1.10.1",
     "inquirer": "^3.2.1",
     "progress": "^2.0.0",
     "semver": "^5.4.1",
