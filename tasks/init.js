@@ -37,7 +37,7 @@ const questions = [
     message: 'Project name',
     type: 'input',
     validate: (name) => validatePackageName(name).validForNewPackages,
-    default: path.basename(path.dirname(path.resolve(paths.scriptPath(''))))    
+    default: path.basename(paths.scriptPath('.'))    
   },
   {
     name: 'description',
@@ -47,7 +47,7 @@ const questions = [
   },  
   {
     name: 'command',
-    message: 'command name',
+    message: 'command name (when installed globally)',
     type: 'input',
     validate: (name) => /[a-z0-9_\-]+/.test(name),
     default: (answers) => answers.name
@@ -92,6 +92,11 @@ prompt(questions)
     pkg.name = answers.name;
     pkg.description = answers.description;
     pkg.cli.main = answers.entryPoint;
+
+    let binEntry = pkg.bin['cli-core'];
+
+    delete pkg.bin['cli-core'];
+    pkg.bin[answers.command] = binEntry;
 
     // TODO: update `repository`, `homepage`, and `bugs` keys
     forkUpstreams(pkg.repository.url)
