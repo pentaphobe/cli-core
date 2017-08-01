@@ -8,7 +8,7 @@
 
 const fs = require('graceful-fs');
 const chalk = require('chalk');
-const writeJsonFile = require('write-json-file');
+const realWriteJsonFile = require('write-json-file');
 const { isDryRun, setDryRun, dryLog } = require('./dryRun');
 
 let methods = {};
@@ -30,7 +30,7 @@ let methodNames = [
         resolve('dry run mode');
       })
     }
-    return writeJsonFile(filename, data);
+    return realWriteJsonFile(filename, data);
   }
 ];
 
