@@ -36,6 +36,7 @@
     "inquirer": "^3.2.1",
     "progress": "^2.0.0",
     "semver": "^5.4.1",
+    "simple-git": "^1.75.0",
     "validate-npm-package-name": "^3.0.0",
     "write-json-file": "^2.2.0"
   },

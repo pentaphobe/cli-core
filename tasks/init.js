@@ -16,9 +16,11 @@ const validatePackageName = require('validate-npm-package-name');
 
 const paths = require('../src/paths');
 const fs = require('../src/fs');
+const { isDryRun, setDryRun } = require('../src/dryRun');
+
 let pkg = require('../package.json');
 
-fs.setDryRun(true);
+setDryRun(true);
 
 /** 
  * 
@@ -107,11 +109,13 @@ function savePackage(pkg) {
   console.dir(pkg, {colors: true});
 
   if (pkg.name === 'cli-core') {
-    console.log(chalk.red.bold(`not overwriting package.json: `), chalk.red(`your project name is still "cli-core", please change it`));
+    console.log(
+      chalk.red.bold(`not overwriting package.json:\n`), 
+      chalk.red(`  your project name is still "${chalk.white.bold('cli-core')}", are you in the right place?`));
     process.exit(0);
   }
 
-  fs.writeJsonFile(paths.scriptPath('package.json'), pkg)
+  fs.writeJsonFile(paths.scriptPath('package2.json'), pkg)
   .then(() => {
     console.log('done');
   })

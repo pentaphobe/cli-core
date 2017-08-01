@@ -9,6 +9,7 @@
 const fs = require('graceful-fs');
 const chalk = require('chalk');
 const writeJsonFile = require('write-json-file');
+const { isDryRun, setDryRun } = require('./dryRun');
 
 let methods = {};
 let methodNames = [
@@ -16,14 +17,14 @@ let methodNames = [
   'fstatSync',
   function existsSync(path) {    
     // custom handler
-    if (isDryRun) {
+    if (isDryRun()) {
       report('existsSync', path);
       return true;
     }
     return fs.existsSync(path);
   },
   function writeJsonFile(filename, data) {
-    if (isDryRun) {
+    if (isDryRun()) {
       // return an empty promise
       return new Promise(function (resolve, reject) {
         resolve('dry run mode');
@@ -45,7 +46,7 @@ function wrap(funcName, fn, ctx) {
   return function wrapped() {
     let args = Array.prototype.slice.call(arguments);
 
-    if (isDryRun) {
+    if (isDryRun()) {
       // console.log(chalk.magenta(`dry-run ${funcName}:\n  `), args);
       report(funcName, args)
       return true;
@@ -60,15 +61,7 @@ methodNames.forEach( name =>
     ? methods[name] = wrap(name, fs[name], fs) 
     : methods[name.name] = name );
 
-module.exports = Object.assign({
-  isDryRun: () => isDryRun,
-  setDryRun: (val) => {
-    isDryRun = val;
-    if (val) {
-      console.log(chalk.magenta('## Using Dry Run'));
-    }
-  },
-}, methods);
+module.exports = methods;
 
 function report(message/* ,args... */) {
   let args = Array.prototype.slice.call(arguments, 1);

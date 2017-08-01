@@ -6,13 +6,14 @@ const program = require('commander');
 
 const fs = require('./fs');
 const { cwdRelative, scriptPath } = require('./paths');
+const { isDryRun, setDryRun } = require('./dryRun');
 
 ///////// Global configuration and options
 program
   .version(pkg.version)
   .option('-d, --dry-run', `don't modify filesystem in any way`)
   .on('option:dry-run', function () {
-    fs.setDryRun(true);
+    setDryRun(true);
   })
 
 ///////// Commands
