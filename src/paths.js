@@ -3,10 +3,14 @@
  * in the current path vs. files in the script path
  */
 
+const appRootPath = require('app-root-path'),
+      reqlib = appRootPath.require,
+      rootPath = appRootPath.toString();
+
 const path = require('path');
 
 function scriptPath(filePath) {
-  return path.join(__dirname, filePath);
+  return path.join(rootPath, filePath);
 }
 
 function cwdPath(filePath) {
@@ -14,7 +18,7 @@ function cwdPath(filePath) {
 }
 
 function scriptRelative(filePath) {
-  return path.relative(__dirname, filePath);
+  return path.relative(rootPath, filePath);
 }
 
 function cwdRelative(filePath) {
@@ -25,5 +29,6 @@ module.exports = {
   scriptPath,
   cwdPath,
   scriptRelative,
-  cwdRelative
+  cwdRelative,
+  require: reqlib
 };

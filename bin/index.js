@@ -28,13 +28,9 @@ function performCompatibilityChecks() {
 	return true;
 };
 
-global.rootRequire = function(name) {
-  return require(path.join(__dirname, '..', name));
-}
-
 if (isCompatible !== true) {
 	console.error(chalk.red.bold(`\t${warningSymbol}\t`), chalk.red(isCompatible));	
 } else {
-  var pkg = rootRequire('package.json');
-	module.exports = rootRequire(pkg.cli.main);
+  var pkg = require('../package.json');
+	module.exports = require(path.join('..', pkg.cli.main));
 }

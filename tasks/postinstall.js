@@ -11,5 +11,5 @@ console.log(
     this is a placeholder
     postinstall should actually point at tasks/init`));
 
-require('./init');
+
 

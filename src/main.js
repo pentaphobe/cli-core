@@ -1,5 +1,5 @@
 const path = require('path');
-const pkg = rootRequire('package.json');
+const pkg = require('../package.json');
 
 const chalk = require('chalk');
 const program = require('commander');
@@ -36,6 +36,13 @@ program
       }
     }, 100);
   });
+
+program
+  .command('init')
+  .description('runs the init task (just for testing)')
+  .action(() => {
+    require(scriptPath('tasks/init'));
+  })
 
 ///////// Entry point
 program.parse(process.argv);

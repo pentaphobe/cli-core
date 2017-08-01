@@ -25,12 +25,16 @@ let methodNames = [
   },
   function writeJsonFile(filename, data) {
     if (isDryRun()) {
+      dryLog(`writing JSON file ${filename}`);
       // return an empty promise
       return new Promise(function (resolve, reject) {
         resolve('dry run mode');
       })
     }
-    return realWriteJsonFile(filename, data);
+    return realWriteJsonFile(filename, data, {
+      // indent using two spaces
+      indent: '  ',    
+    });
   }
 ];
 

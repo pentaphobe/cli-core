@@ -84,6 +84,8 @@ const questions = [
 var prompt = inquirer.createPromptModule();
 
 console.log(chalk.cyan.bold(`--- CLI Core Initialisation/Configuration\n`));
+// TODO: remove after dev
+setDryRun(true);
 
 prompt(questions)
   .then(function (answers) {    
