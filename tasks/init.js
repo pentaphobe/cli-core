@@ -17,6 +17,7 @@ const validatePackageName = require('validate-npm-package-name');
 const paths = require('../src/paths');
 const fs = require('../src/fs');
 const { isDryRun, setDryRun } = require('../src/dryRun');
+const { forkUpstreams } = require('../src/git');
 
 let pkg = require('../package.json');
 
@@ -93,8 +94,10 @@ prompt(questions)
     pkg.cli.main = answers.entryPoint;
     
     // TODO: update `repository`, `homepage`, and `bugs` keys
-
-    savePackage(pkg);
+    forkUpstreams(pkg.repository)
+    .then(function () {
+      savePackage(pkg);
+    })
   })
 
 
@@ -105,8 +108,8 @@ prompt(questions)
  */
 
 function savePackage(pkg) {
-  console.log('### Resulting package.json');
-  console.dir(pkg, {colors: true});
+  // console.log('### Resulting package.json');
+  // console.dir(pkg, {colors: true});
 
   if (pkg.name === 'cli-core') {
     console.log(

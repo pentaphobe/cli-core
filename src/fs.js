@@ -9,7 +9,7 @@
 const fs = require('graceful-fs');
 const chalk = require('chalk');
 const writeJsonFile = require('write-json-file');
-const { isDryRun, setDryRun } = require('./dryRun');
+const { isDryRun, setDryRun, dryLog } = require('./dryRun');
 
 let methods = {};
 let methodNames = [
@@ -18,7 +18,7 @@ let methodNames = [
   function existsSync(path) {    
     // custom handler
     if (isDryRun()) {
-      report('existsSync', path);
+      dryLog('existsSync', path);
       return true;
     }
     return fs.existsSync(path);
@@ -48,7 +48,7 @@ function wrap(funcName, fn, ctx) {
 
     if (isDryRun()) {
       // console.log(chalk.magenta(`dry-run ${funcName}:\n  `), args);
-      report(funcName, args)
+      dryLog(funcName, args)
       return true;
     }
 
@@ -63,7 +63,3 @@ methodNames.forEach( name =>
 
 module.exports = methods;
 
-function report(message/* ,args... */) {
-  let args = Array.prototype.slice.call(arguments, 1);
-  console.log(chalk.magenta(`dry-run ${message}:\n  `), args.map(v => JSON.stringify(v)).join(', '));
-}

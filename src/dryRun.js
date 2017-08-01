@@ -9,6 +9,11 @@
 const chalk = require('chalk');
 let isDryRun = false;
 
+function report(message/* ,args... */) {
+  let args = Array.prototype.slice.call(arguments, 1);
+  console.log(chalk.magenta(`dry-run ${message}:\n  `), args.map(v => JSON.stringify(v)).join(', '));
+}
+
 module.exports = {
   isDryRun: () => isDryRun,
   setDryRun: (val) => {
@@ -17,4 +22,5 @@ module.exports = {
     console.log(chalk.magenta(`## Dry Run ${chalk.bold(val ? 'ON' : 'OFF')}`));
     // }
   },
+  dryLog: report
 }
