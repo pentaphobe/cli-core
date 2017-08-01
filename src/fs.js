@@ -30,7 +30,7 @@ let methodNames = [
         resolve('dry run mode');
       })
     }
-    // return writeJsonFile(filename, data);
+    return writeJsonFile(filename, data);
   }
 ];
 
