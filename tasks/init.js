@@ -84,11 +84,15 @@ const questions = [
 var prompt = inquirer.createPromptModule();
 
 console.log(chalk.cyan.bold(`--- CLI Core Initialisation/Configuration\n`));
-// TODO: remove after dev
-setDryRun(true);
 
 prompt(questions)
   .then(function (answers) {    
+    if (pkg.name === 'cli-core') {
+      console.log(
+        chalk.red.bold(`not writing to files:\n`), 
+        chalk.red(`  your project name is still "${chalk.white.bold('cli-core')}", are you in the right place?`));
+      setDryRun(true);      
+    }
     pkg.name = answers.name;
     pkg.description = answers.description;
     pkg.cli.main = answers.entryPoint;
@@ -118,14 +122,7 @@ prompt(questions)
  */
 
 function savePackage(pkg) {
-  if (pkg.name === 'cli-core') {
-    console.log(
-      chalk.red.bold(`not overwriting package.json:\n`), 
-      chalk.red(`  your project name is still "${chalk.white.bold('cli-core')}", are you in the right place?`));
-    process.exit(0);
-  }
-
-  fs.writeJsonFile(paths.scriptPath('package2.json'), pkg)
+  fs.writeJsonFile(paths.scriptPath('package.json'), pkg)
     .then(() => {
       console.log('done');
     })
