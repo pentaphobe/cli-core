@@ -108,9 +108,6 @@ prompt(questions)
  */
 
 function savePackage(pkg) {
-  // console.log('### Resulting package.json');
-  // console.dir(pkg, {colors: true});
-
   if (pkg.name === 'cli-core') {
     console.log(
       chalk.red.bold(`not overwriting package.json:\n`), 
