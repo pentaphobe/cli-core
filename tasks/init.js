@@ -87,7 +87,7 @@ console.log(chalk.cyan.bold(`--- CLI Core Initialisation/Configuration\n`));
 
 prompt(questions)
   .then(function (answers) {    
-    if (pkg.name === 'cli-core') {
+    if (answers.name === 'cli-core') {
       console.log(
         chalk.red.bold(`not writing to files:\n`), 
         chalk.red(`  your project name is still "${chalk.white.bold('cli-core')}", are you in the right place?`));
