@@ -21,8 +21,6 @@ const { forkUpstreams } = require('../src/git');
 
 let pkg = require('../package.json');
 
-setDryRun(true);
-
 /** 
  * 
  * Questions for package.json updates
@@ -80,7 +78,7 @@ const questions = [
 
 /**
  * 
- * Entry point
+ * ENTRY POINT
  * 
  */
 var prompt = inquirer.createPromptModule();
@@ -92,14 +90,19 @@ prompt(questions)
     pkg.name = answers.name;
     pkg.description = answers.description;
     pkg.cli.main = answers.entryPoint;
-    
+
     // TODO: update `repository`, `homepage`, and `bugs` keys
     forkUpstreams(pkg.repository)
-    .then(function () {
-      savePackage(pkg);
-    })
+      .then(function () {
+        savePackage(pkg);
+      })
+      .catch(function () {
+        console.log('upstream promise rejected', arguments);
+      })
   })
-
+  .catch(function() {
+    console.log('prompt promise rejected', arguments);
+  })
 
 /**
  *
@@ -116,10 +119,10 @@ function savePackage(pkg) {
   }
 
   fs.writeJsonFile(paths.scriptPath('package2.json'), pkg)
-  .then(() => {
-    console.log('done');
-  })
-  .catch(() => {
-    console.log('error');
-  });
+    .then(() => {
+      console.log('done');
+    })
+    .catch(() => {
+      console.log('writejson promise rejected', arguments);
+    });
 }
