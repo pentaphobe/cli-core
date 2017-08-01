@@ -92,7 +92,7 @@ prompt(questions)
     pkg.cli.main = answers.entryPoint;
 
     // TODO: update `repository`, `homepage`, and `bugs` keys
-    forkUpstreams(pkg.repository)
+    forkUpstreams(pkg.repository.url)
       .then(function () {
         savePackage(pkg);
       })
